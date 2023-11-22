@@ -15,7 +15,8 @@ configValidationMode: warn
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs12.x
+  lambdaHashingVersion: '20201221'
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-west-2'}
 
@@ -298,7 +299,10 @@ resources:
           Ref: AttachmentsBucket
         PolicyDocument:
           Statement:
-          - Action: s3:*
+          - Action: [
+            's3:GetObject',
+            's3:putObject'
+          ]
             Principal: '*'
             Effect: Allow
             Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*
