@@ -299,10 +299,9 @@ resources:
           Ref: AttachmentsBucket
         PolicyDocument:
           Statement:
-          - Action: [
-            's3:GetObject',
-            's3:PutObject'
-            ]
+          - Action: 
+              - s3:GetObject
+              - s3:PutObject
             Principal: '*'
             Effect: Allow
             Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*

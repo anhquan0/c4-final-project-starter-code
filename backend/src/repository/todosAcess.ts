@@ -187,7 +187,6 @@ export class TodosAccess {
   async createAttachmentPresignedUrl(userId: string, todoId: string): Promise<string> {
     logger.info('get URL updload' + userId);
     try {
-
       let attachmentUrl = S3.getSignedUrl('putObject', {
         Bucket: this.bucketName,
         Key: todoId,
@@ -204,7 +203,6 @@ export class TodosAccess {
           }
         },
         AttributeUpdates: {
-
           "attachmentUrl": {
             "Value": {
               "S": `https://${this.bucketName}.s3.amazonaws.com/${todoId}`
@@ -214,6 +212,7 @@ export class TodosAccess {
         TableName: this.todoTable
       }
       await this.docClient.updateItem(param).promise();
+      logger.info('final url:' + attachmentUrl)      
       return attachmentUrl;
     } catch (error) {
       logger.error('get url error', error);
